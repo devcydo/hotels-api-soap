@@ -20,6 +20,7 @@
 
     <xs:complexType name="hotel">
         <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
             <xs:element name="name" type="xs:string"/>
             <xs:element name="address" type="xs:string"/>
             <xs:element name="rating" type="xs:int"/>
