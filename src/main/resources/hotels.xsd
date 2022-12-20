@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://localhost/"
-           targetNamespace="http://www.baeldung.com/springsoap/gen" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.localhost.com/xml/hotels"
+           targetNamespace="http://www.localhost.com/xml/hotels" elementFormDefault="qualified">
 
     <xs:element name="getHotelRequest">
         <xs:complexType>
