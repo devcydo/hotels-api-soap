@@ -19,15 +19,15 @@ public class WebServiceConfig {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
         servlet.setApplicationContext(applicationContext);
         servlet.setTransformWsdlLocations(true);
-        return new ServletRegistrationBean(servlet, "/service/*");
+        return new ServletRegistrationBean(servlet, "/ws/*");
     }
 
     @Bean(name = "hotels")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema hotelsSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("StudentDetailsPort");
-        wsdl11Definition.setLocationUri("/service/hotels");
-        wsdl11Definition.setTargetNamespace("http://www.howtodoinjava.com/xml/school");
+        wsdl11Definition.setPortTypeName("HotelPort");
+        wsdl11Definition.setTargetNamespace("http://hotels.com/hotels");
+        wsdl11Definition.setLocationUri("/ws");
         wsdl11Definition.setSchema(hotelsSchema);
         return wsdl11Definition;
     }
