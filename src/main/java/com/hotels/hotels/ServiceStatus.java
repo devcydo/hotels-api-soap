@@ -11,23 +11,21 @@ package com.hotels.hotels;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for ServiceStatus complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType>
+ * &lt;complexType name="ServiceStatus">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="rating" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="statusCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,82 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "name",
-    "address",
-    "rating"
+@XmlType(name = "ServiceStatus", propOrder = {
+    "statusCode",
+    "message"
 })
-@XmlRootElement(name = "SaveHotelDetailsRequest")
-public class SaveHotelDetailsRequest {
+public class ServiceStatus {
 
     @XmlElement(required = true)
-    protected String name;
+    protected String statusCode;
     @XmlElement(required = true)
-    protected String address;
-    protected int rating;
+    protected String message;
 
     /**
-     * Gets the value of the name property.
+     * Gets the value of the statusCode property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getName() {
-        return name;
+    public String getStatusCode() {
+        return statusCode;
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the value of the statusCode property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setName(String value) {
-        this.name = value;
+    public void setStatusCode(String value) {
+        this.statusCode = value;
     }
 
     /**
-     * Gets the value of the address property.
+     * Gets the value of the message property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAddress() {
-        return address;
+    public String getMessage() {
+        return message;
     }
 
     /**
-     * Sets the value of the address property.
+     * Sets the value of the message property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAddress(String value) {
-        this.address = value;
-    }
-
-    /**
-     * Gets the value of the rating property.
-     * 
-     */
-    public int getRating() {
-        return rating;
-    }
-
-    /**
-     * Sets the value of the rating property.
-     * 
-     */
-    public void setRating(int value) {
-        this.rating = value;
+    public void setMessage(String value) {
+        this.message = value;
     }
 
 }

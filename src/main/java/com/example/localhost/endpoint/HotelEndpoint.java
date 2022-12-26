@@ -1,8 +1,14 @@
-package com.example.localhost.service;
+package com.example.localhost.endpoint;
 
+import com.example.localhost.exception.NotFoundException;
+import com.example.localhost.exception.ServiceFaultException;
 import com.example.localhost.model.Hotel;
-import com.example.localhost.repository.HotelRepository;
+import com.example.localhost.service.HotelService;
+import com.example.localhost.service.Status;
+
 import com.hotels.hotels.*;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -16,25 +22,27 @@ public class HotelEndpoint {
 
     private static final String NAMESPACE_URI = "http://hotels.com/hotels";
 
-    private HotelRepository hotelRepository;
+    private HotelService hotelService;
 
     @Autowired
-    public HotelEndpoint(HotelRepository hotelRepository){
-        this.hotelRepository = hotelRepository;
+    public HotelEndpoint(HotelService hotelService){
+        this.hotelService = hotelService;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetHotelDetailsRequest")
     @ResponsePayload
-    public GetHotelDetailsResponse processHotelDetailsRequest(@RequestPayload GetHotelDetailsRequest request){
-        Hotel hotel = hotelRepository.findById(request.getId());
+    public GetHotelDetailsResponse processHotelDetailsRequest(@RequestPayload GetHotelDetailsRequest request) throws NotFoundException {
+        Hotel hotel = hotelService.getById(request.getId());
 
-        return mapHotelDetails(hotel);
+        if(hotel == null) throw new NotFoundException("Hotel with id " + request.getId() + "not found");
+
+        return mapHotelDetails(toHotelDetails(hotel));
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllHotelDetailsRequest")
     @ResponsePayload
     public GetAllHotelDetailsResponse processAllHotelDetailsRequest(@RequestPayload GetAllHotelDetailsRequest request){
-        List<Hotel> hotels = hotelRepository.findAll();
+        List<Hotel> hotels = hotelService.getAll();
 
         return mapAllHotelDetails(hotels);
     }
@@ -42,23 +50,22 @@ public class HotelEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SaveHotelDetailsRequest")
     @ResponsePayload
     public SaveHotelDetailsResponse saveHotelDetailsRequest(@RequestPayload SaveHotelDetailsRequest request){
-        Hotel hotel = hotelRepository.save(toHotel(request));
-
+        Hotel hotel = hotelService.save(toHotel(request));
         return mapSaveHotelDetails(hotel);
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "DeleteHotelDetailsRequest")
     @ResponsePayload
-    public DeleteHotelDetailsResponse deleteHotelDetailsRequest(@RequestPayload DeleteHotelDetailsRequest request){
-        hotelRepository.deleteById(request.getId());
+    public DeleteHotelDetailsResponse deleteHotelDetailsRequest(@RequestPayload DeleteHotelDetailsRequest request) throws ServiceFaultException {
+        boolean deleted = hotelService.deleteById(request.getId());
 
-        return mapDeleteHotelDetails("success");
+        return mapDeleteHotelDetails(deleted);
     }
 
-    private GetHotelDetailsResponse mapHotelDetails(Hotel hotel) {
+    private GetHotelDetailsResponse mapHotelDetails(HotelDetails hotelDetails) {
         GetHotelDetailsResponse response = new GetHotelDetailsResponse();
 
-        response.setHotelDetails(toHotelDetails(hotel));
+        response.setHotelDetails(hotelDetails);
 
         return response;
     }
@@ -79,20 +86,26 @@ public class HotelEndpoint {
         return response;
     }
 
-    private DeleteHotelDetailsResponse mapDeleteHotelDetails(String status) {
+    private DeleteHotelDetailsResponse mapDeleteHotelDetails(boolean deleted) {
         DeleteHotelDetailsResponse response = new DeleteHotelDetailsResponse();
+        ServiceStatus serviceStatus = new ServiceStatus();
 
-        response.setStatus(status);
+        if (deleted) {
+            serviceStatus.setStatusCode("SUCCESS");
+            serviceStatus.setMessage("Content deleted successfully");
+        } else {
+            serviceStatus.setStatusCode("ERROR");
+            serviceStatus.setMessage("Exception while deleting hotel");
+        }
+
+        response.setServiceStatus(serviceStatus);
 
         return response;
     }
 
     private HotelDetails toHotelDetails(Hotel hotel) {
         HotelDetails hotelDetails = new HotelDetails();
-        hotelDetails.setId(hotel.getId());
-        hotelDetails.setName(hotel.getName());
-        hotelDetails.setAddress(hotel.getAddress());
-        hotelDetails.setRating(hotel.getRating());
+        BeanUtils.copyProperties(hotel, hotelDetails);
         return hotelDetails;
     }
 
