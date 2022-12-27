@@ -1,6 +1,7 @@
 package com.example.localhost.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "hotels")
@@ -19,15 +20,19 @@ public class Hotel {
     @Column(name = "rating")
     private int rating;
 
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Amenity> amenities;
+
     public Hotel() {
 
     }
 
-    public Hotel(long id, String name, String address, int rating) {
+    public Hotel(long id, String name, String address, int rating, List<Amenity> amenities) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.rating = rating;
+        this.amenities = amenities;
     }
 
     public long getId() {
@@ -62,12 +67,22 @@ public class Hotel {
         this.rating = rating;
     }
 
+    public List<Amenity> getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(List<Amenity> amenities) {
+        this.amenities = amenities;
+    }
+
     @Override
     public String toString() {
         return "Hotel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
+                ", rating=" + rating +
+                ", amenities=" + amenities +
                 '}';
     }
 }

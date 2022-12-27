@@ -5,5 +5,5 @@
 // Generated on: 2022.12.27 at 12:38:44 PM CST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://hotels.com/hotels", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package com.hotels.hotels;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://hotels.com/amenities", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+package com.hotels.amenities;

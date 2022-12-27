@@ -6,7 +6,7 @@
 //
 
 
-package com.hotels.hotels;
+package com.hotels.amenities;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="HotelDetails" type="{http://hotels.com/hotels}HotelDetails"/>
+ *         &lt;element name="ServiceStatus" type="{http://hotels.com/amenities}ServiceStatus"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "hotelDetails"
+    "serviceStatus"
 })
-@XmlRootElement(name = "GetHotelDetailsResponse")
-public class GetHotelDetailsResponse {
+@XmlRootElement(name = "DeleteAmenityDetailsResponse")
+public class DeleteAmenityDetailsResponse {
 
-    @XmlElement(name = "HotelDetails", required = true)
-    protected HotelDetails hotelDetails;
+    @XmlElement(name = "ServiceStatus", required = true)
+    protected ServiceStatus serviceStatus;
 
     /**
-     * Gets the value of the hotelDetails property.
+     * Gets the value of the serviceStatus property.
      * 
      * @return
      *     possible object is
-     *     {@link HotelDetails }
+     *     {@link ServiceStatus }
      *     
      */
-    public HotelDetails getHotelDetails() {
-        return hotelDetails;
+    public ServiceStatus getServiceStatus() {
+        return serviceStatus;
     }
 
     /**
-     * Sets the value of the hotelDetails property.
+     * Sets the value of the serviceStatus property.
      * 
      * @param value
      *     allowed object is
-     *     {@link HotelDetails }
+     *     {@link ServiceStatus }
      *     
      */
-    public void setHotelDetails(HotelDetails value) {
-        this.hotelDetails = value;
+    public void setServiceStatus(ServiceStatus value) {
+        this.serviceStatus = value;
     }
 
 }

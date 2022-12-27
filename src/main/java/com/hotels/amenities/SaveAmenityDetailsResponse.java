@@ -6,7 +6,7 @@
 //
 
 
-package com.hotels.hotels;
+package com.hotels.amenities;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="HotelDetails" type="{http://hotels.com/hotels}HotelDetails"/>
+ *         &lt;element name="AmenityDetails" type="{http://hotels.com/amenities}AmenityDetails"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "hotelDetails"
+    "amenityDetails"
 })
-@XmlRootElement(name = "GetHotelDetailsResponse")
-public class GetHotelDetailsResponse {
+@XmlRootElement(name = "SaveAmenityDetailsResponse")
+public class SaveAmenityDetailsResponse {
 
-    @XmlElement(name = "HotelDetails", required = true)
-    protected HotelDetails hotelDetails;
+    @XmlElement(name = "AmenityDetails", required = true)
+    protected AmenityDetails amenityDetails;
 
     /**
-     * Gets the value of the hotelDetails property.
+     * Gets the value of the amenityDetails property.
      * 
      * @return
      *     possible object is
-     *     {@link HotelDetails }
+     *     {@link AmenityDetails }
      *     
      */
-    public HotelDetails getHotelDetails() {
-        return hotelDetails;
+    public AmenityDetails getAmenityDetails() {
+        return amenityDetails;
     }
 
     /**
-     * Sets the value of the hotelDetails property.
+     * Sets the value of the amenityDetails property.
      * 
      * @param value
      *     allowed object is
-     *     {@link HotelDetails }
+     *     {@link AmenityDetails }
      *     
      */
-    public void setHotelDetails(HotelDetails value) {
-        this.hotelDetails = value;
+    public void setAmenityDetails(AmenityDetails value) {
+        this.amenityDetails = value;
     }
 
 }

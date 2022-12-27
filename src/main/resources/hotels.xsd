@@ -74,6 +74,7 @@
             <xs:element name="name" type="xs:string"/>
             <xs:element name="address" type="xs:string"/>
             <xs:element name="rating" type="xs:int"/>
+            <xs:element name="AmenityDetails" type="tns:AmenityDetails" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 

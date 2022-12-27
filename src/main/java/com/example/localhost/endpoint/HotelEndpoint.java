@@ -2,9 +2,9 @@ package com.example.localhost.endpoint;
 
 import com.example.localhost.exception.NotFoundException;
 import com.example.localhost.exception.ServiceFaultException;
+import com.example.localhost.model.Amenity;
 import com.example.localhost.model.Hotel;
 import com.example.localhost.service.HotelService;
-import com.example.localhost.service.Status;
 
 import com.hotels.hotels.*;
 
@@ -15,7 +15,9 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Endpoint
 public class HotelEndpoint {
@@ -96,6 +98,7 @@ public class HotelEndpoint {
         } else {
             serviceStatus.setStatusCode("ERROR");
             serviceStatus.setMessage("Exception while deleting hotel");
+            serviceStatus.setMessage("Exception while deleting hotel");
         }
 
         response.setServiceStatus(serviceStatus);
@@ -105,8 +108,27 @@ public class HotelEndpoint {
 
     private HotelDetails toHotelDetails(Hotel hotel) {
         HotelDetails hotelDetails = new HotelDetails();
-        BeanUtils.copyProperties(hotel, hotelDetails);
+
+        hotelDetails.setId(hotel.getId());
+        hotelDetails.setName(hotel.getName());
+        hotelDetails.setAddress(hotel.getAddress());
+        hotelDetails.setRating(hotel.getRating());
+
+        Optional.ofNullable(hotel.getAmenities())
+                .orElseGet(Collections::emptyList)
+                .stream().forEach(amenity -> hotelDetails.getAmenityDetails().add(toAmenityDetails(amenity)));
+
         return hotelDetails;
+    }
+
+    private AmenityDetails toAmenityDetails(Amenity amenity) {
+        AmenityDetails amenityDetails = new AmenityDetails();
+
+        amenityDetails.setId(amenity.getId());
+        amenityDetails.setName(amenity.getName());
+        amenityDetails.setDescription(amenity.getDescription());
+
+        return amenityDetails;
     }
 
     private Hotel toHotel(SaveHotelDetailsRequest hotelDetails) {

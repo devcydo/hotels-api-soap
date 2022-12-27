@@ -6,28 +6,27 @@
 //
 
 
-package com.hotels.hotels;
+package com.hotels.amenities;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for AmenityDetails complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType>
+ * &lt;complexType name="AmenityDetails">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="rating" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,19 +36,34 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
+@XmlType(name = "AmenityDetails", propOrder = {
+    "id",
     "name",
-    "address",
-    "rating"
+    "description"
 })
-@XmlRootElement(name = "SaveHotelDetailsRequest")
-public class SaveHotelDetailsRequest {
+public class AmenityDetails {
 
+    protected long id;
     @XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
-    protected String address;
-    protected int rating;
+    protected String description;
+
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
 
     /**
      * Gets the value of the name property.
@@ -76,43 +90,27 @@ public class SaveHotelDetailsRequest {
     }
 
     /**
-     * Gets the value of the address property.
+     * Gets the value of the description property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAddress() {
-        return address;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Sets the value of the address property.
+     * Sets the value of the description property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAddress(String value) {
-        this.address = value;
-    }
-
-    /**
-     * Gets the value of the rating property.
-     * 
-     */
-    public int getRating() {
-        return rating;
-    }
-
-    /**
-     * Sets the value of the rating property.
-     * 
-     */
-    public void setRating(int value) {
-        this.rating = value;
+    public void setDescription(String value) {
+        this.description = value;
     }
 
 }

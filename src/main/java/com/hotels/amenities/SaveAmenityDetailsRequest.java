@@ -6,7 +6,7 @@
 //
 
 
-package com.hotels.hotels;
+package com.hotels.amenities;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -26,8 +26,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="rating" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="id_hotel" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,17 +39,18 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "name",
-    "address",
-    "rating"
+    "description",
+    "idHotel"
 })
-@XmlRootElement(name = "SaveHotelDetailsRequest")
-public class SaveHotelDetailsRequest {
+@XmlRootElement(name = "SaveAmenityDetailsRequest")
+public class SaveAmenityDetailsRequest {
 
     @XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
-    protected String address;
-    protected int rating;
+    protected String description;
+    @XmlElement(name = "id_hotel")
+    protected long idHotel;
 
     /**
      * Gets the value of the name property.
@@ -76,43 +77,43 @@ public class SaveHotelDetailsRequest {
     }
 
     /**
-     * Gets the value of the address property.
+     * Gets the value of the description property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAddress() {
-        return address;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Sets the value of the address property.
+     * Sets the value of the description property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAddress(String value) {
-        this.address = value;
+    public void setDescription(String value) {
+        this.description = value;
     }
 
     /**
-     * Gets the value of the rating property.
+     * Gets the value of the idHotel property.
      * 
      */
-    public int getRating() {
-        return rating;
+    public long getIdHotel() {
+        return idHotel;
     }
 
     /**
-     * Sets the value of the rating property.
+     * Sets the value of the idHotel property.
      * 
      */
-    public void setRating(int value) {
-        this.rating = value;
+    public void setIdHotel(long value) {
+        this.idHotel = value;
     }
 
 }

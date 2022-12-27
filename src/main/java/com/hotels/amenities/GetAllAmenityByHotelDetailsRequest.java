@@ -6,7 +6,7 @@
 //
 
 
-package com.hotels.hotels;
+package com.hotels.amenities;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="HotelDetails" type="{http://hotels.com/hotels}HotelDetails"/>
+ *         &lt;element name="id_hotel" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +36,28 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "hotelDetails"
+    "idHotel"
 })
-@XmlRootElement(name = "GetHotelDetailsResponse")
-public class GetHotelDetailsResponse {
+@XmlRootElement(name = "GetAllAmenityByHotelDetailsRequest")
+public class GetAllAmenityByHotelDetailsRequest {
 
-    @XmlElement(name = "HotelDetails", required = true)
-    protected HotelDetails hotelDetails;
+    @XmlElement(name = "id_hotel")
+    protected long idHotel;
 
     /**
-     * Gets the value of the hotelDetails property.
+     * Gets the value of the idHotel property.
      * 
-     * @return
-     *     possible object is
-     *     {@link HotelDetails }
-     *     
      */
-    public HotelDetails getHotelDetails() {
-        return hotelDetails;
+    public long getIdHotel() {
+        return idHotel;
     }
 
     /**
-     * Sets the value of the hotelDetails property.
+     * Sets the value of the idHotel property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link HotelDetails }
-     *     
      */
-    public void setHotelDetails(HotelDetails value) {
-        this.hotelDetails = value;
+    public void setIdHotel(long value) {
+        this.idHotel = value;
     }
 
 }
