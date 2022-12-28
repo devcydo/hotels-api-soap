@@ -3,7 +3,6 @@ package com.example.localhost.endpoint;
 import com.example.localhost.exception.NotFoundException;
 import com.example.localhost.exception.ServiceFaultException;
 import com.example.localhost.model.Amenity;
-import com.example.localhost.model.Hotel;
 import com.example.localhost.service.AmenityService;
 
 import com.hotels.amenities.*;
@@ -16,6 +15,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
+import java.util.Set;
 
 @Endpoint
 public class AmenityEndpoint {
@@ -29,7 +29,7 @@ public class AmenityEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllAmenityByHotelDetailsRequest")
     @ResponsePayload
     public GetAllAmenityByHotelDetailsResponse getAllAmenityByHotelDetailsRequest(@RequestPayload GetAllAmenityByHotelDetailsRequest request) throws NotFoundException {
-        List<Amenity> amenities = amenityService.getByHotel(request.getIdHotel());
+        Set<Amenity> amenities = amenityService.getByHotel(request.getIdHotel());
 
         if(amenities == null) throw new NotFoundException("Amenities for hotel with id " + request.getIdHotel() + "not found");
 
@@ -51,7 +51,7 @@ public class AmenityEndpoint {
         return mapDeleteAmenityDetails(deleted);
     }
 
-    private GetAllAmenityByHotelDetailsResponse mapAllAmenityByHotelDetailsResponse(List<Amenity> amenities) {
+    private GetAllAmenityByHotelDetailsResponse mapAllAmenityByHotelDetailsResponse(Set<Amenity> amenities) {
         GetAllAmenityByHotelDetailsResponse response = new GetAllAmenityByHotelDetailsResponse();
 
         amenities.stream().forEach(amenity -> response.getAmenityDetails().add(toAmenityDetails(amenity)));
@@ -93,12 +93,8 @@ public class AmenityEndpoint {
     private Amenity toAmenity(SaveAmenityDetailsRequest amenityDetails) {
         Amenity amenity = new Amenity();
 
-        Hotel hotel = new Hotel();
-        hotel.setId(amenityDetails.getIdHotel());
-
         amenity.setName(amenityDetails.getName());
         amenity.setDescription(amenityDetails.getDescription());
-        amenity.setHotel(hotel);
 
         return amenity;
     }

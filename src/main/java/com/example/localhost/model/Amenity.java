@@ -1,9 +1,10 @@
 package com.example.localhost.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "amenities")
+@Table(name = "amenity")
 public class Amenity {
 
     @Id
@@ -16,18 +17,17 @@ public class Amenity {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_hotel", nullable = false)
-    private Hotel hotel;
+    @ManyToMany(mappedBy = "amenities", fetch = FetchType.EAGER)
+    private Set<Hotel> hotels;
 
     public Amenity() {
     }
 
-    public Amenity(long id, String name, String description, Hotel hotel) {
+    public Amenity(long id, String name, String description, Set<Hotel> hotels) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.hotel = hotel;
+        this.hotels = hotels;
     }
 
     public long getId() {
@@ -54,11 +54,11 @@ public class Amenity {
         this.description = description;
     }
 
-    public Hotel getHotel() {
-        return hotel;
+    public Set<Hotel> getHotels() {
+        return hotels;
     }
 
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
+    public void setHotels(Set<Hotel> hotel) {
+        this.hotels = hotels;
     }
 }

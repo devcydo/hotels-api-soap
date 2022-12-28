@@ -3,12 +3,11 @@ package com.example.localhost.service;
 import com.example.localhost.exception.ServiceFaultException;
 import com.example.localhost.model.Hotel;
 import com.example.localhost.repository.HotelRepository;
-import com.hotels.hotels.ServiceStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class HotelService {
@@ -27,7 +26,7 @@ public class HotelService {
         return hotel;
     };
 
-    public List<Hotel> getAll() {
+    public Set<Hotel> getAll() {
         return repository.findAll();
     };
 

@@ -8,7 +8,6 @@ import com.example.localhost.service.HotelService;
 
 import com.hotels.hotels.*;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -16,8 +15,8 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Endpoint
 public class HotelEndpoint {
@@ -44,7 +43,7 @@ public class HotelEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllHotelDetailsRequest")
     @ResponsePayload
     public GetAllHotelDetailsResponse processAllHotelDetailsRequest(@RequestPayload GetAllHotelDetailsRequest request){
-        List<Hotel> hotels = hotelService.getAll();
+        Set<Hotel> hotels = hotelService.getAll();
 
         return mapAllHotelDetails(hotels);
     }
@@ -72,7 +71,7 @@ public class HotelEndpoint {
         return response;
     }
 
-    private GetAllHotelDetailsResponse mapAllHotelDetails(List<Hotel> hotels) {
+    private GetAllHotelDetailsResponse mapAllHotelDetails(Set<Hotel> hotels) {
         GetAllHotelDetailsResponse response = new GetAllHotelDetailsResponse();
 
         hotels.stream().forEach(hotel -> response.getHotelDetails().add(toHotelDetails(hotel)));
@@ -115,7 +114,7 @@ public class HotelEndpoint {
         hotelDetails.setRating(hotel.getRating());
 
         Optional.ofNullable(hotel.getAmenities())
-                .orElseGet(Collections::emptyList)
+                .orElseGet(Collections::emptySet)
                 .stream().forEach(amenity -> hotelDetails.getAmenityDetails().add(toAmenityDetails(amenity)));
 
         return hotelDetails;

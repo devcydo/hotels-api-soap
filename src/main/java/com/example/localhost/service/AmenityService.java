@@ -1,12 +1,11 @@
 package com.example.localhost.service;
 
 import com.example.localhost.model.Amenity;
-import com.example.localhost.model.Hotel;
 import com.example.localhost.repository.AmenityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class AmenityService {
@@ -25,8 +24,8 @@ public class AmenityService {
         return amenity;
     };
 
-    public List<Amenity> getByHotel(long id_hotel) {
-        return repository.findByHotel_Id(id_hotel);
+    public Set<Amenity> getByHotel(long id_hotel) {
+        return repository.findByHotels(id_hotel);
     }
 
     public Amenity save(Amenity amenity) {

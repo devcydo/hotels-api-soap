@@ -1,10 +1,10 @@
 package com.example.localhost.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "hotels")
+@Table(name = "hotel")
 public class Hotel {
 
     @Id
@@ -20,14 +20,17 @@ public class Hotel {
     @Column(name = "rating")
     private int rating;
 
-    @OneToMany(mappedBy = "hotel", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Amenity> amenities;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "hotel_amenity",
+            joinColumns = @JoinColumn(name = "id_hotel"),
+            inverseJoinColumns = @JoinColumn(name = "id_amenity")
+    )
+    private Set<Amenity> amenities;
 
-    public Hotel() {
+    public Hotel() {}
 
-    }
-
-    public Hotel(long id, String name, String address, int rating, List<Amenity> amenities) {
+    public Hotel(long id, String name, String address, int rating, Set<Amenity> amenities) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -67,11 +70,11 @@ public class Hotel {
         this.rating = rating;
     }
 
-    public List<Amenity> getAmenities() {
+    public Set<Amenity> getAmenities() {
         return amenities;
     }
 
-    public void setAmenities(List<Amenity> amenities) {
+    public void setAmenities(Set<Amenity> amenities) {
         this.amenities = amenities;
     }
 
