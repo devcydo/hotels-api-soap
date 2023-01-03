@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://hotels.com/hotels"
-           targetNamespace="http://hotels.com/hotels" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://hotels.com/soap"
+           targetNamespace="http://hotels.com/soap" elementFormDefault="qualified">
 
+    <!-- Hotel services -->
     <xs:element name="GetHotelDetailsRequest">
         <xs:complexType>
             <xs:sequence>
@@ -29,16 +30,61 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="SaveHotelDetailsRequest">
+    <xs:element name="GetAllHotelDetailsByNameRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="name" type="xs:string"/>
-                <xs:element name="address" type="xs:string"/>
-                <xs:element name="rating" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetAllHotelDetailsByNameResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="HotelDetails" type="tns:HotelDetails" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SaveHotelDetailsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="HotelDetails" type="tns:HotelDetails"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="SaveHotelDetailsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="HotelDetails" type="tns:HotelDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddAmenityDetailsToHotelDetailsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id_hotel" type="xs:long"/>
+                <xs:element name="id_amenity" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddAmenityDetailsToHotelDetailsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="HotelDetails" type="tns:HotelDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="RemoveAmenityDetailsToHotelDetailsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id_hotel" type="xs:long"/>
+                <xs:element name="id_amenity" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RemoveAmenityDetailsToHotelDetailsResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="HotelDetails" type="tns:HotelDetails"/>
@@ -60,6 +106,66 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <!-- Hotel services -->
+
+    <!-- Amenity services -->
+    <xs:element name="GetAllAmenityDetailsRequest">
+        <xs:complexType>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetAllAmenityDetailsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AmenityDetails" type="tns:AmenityDetails" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllAmenityDetailsByHotelRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id_hotel" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetAllAmenityDetailsByHotelResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AmenityDetails" type="tns:AmenityDetails" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SaveAmenityDetailsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AmenityDetails" type="tns:AmenityDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SaveAmenityDetailsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AmenityDetails" type="tns:AmenityDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteAmenityDetailsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeleteAmenityDetailsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ServiceStatus" type="tns:ServiceStatus"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <!-- Amenity services -->
 
     <xs:complexType name="ServiceStatus">
         <xs:sequence>
