@@ -5,6 +5,9 @@ import com.example.hotelsapisoap.model.Hotel;
 import com.example.hotelsapisoap.repository.AmenityRepository;
 import com.example.hotelsapisoap.repository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,11 +28,16 @@ public class HotelServiceImpl implements HotelService {
         return repository.findById(id);
     };
 
-    public List<Hotel> getAll() {
-        return repository.findAll();
-    };
+    @Override
+    public Page<Hotel> filterByName(int page, String name) {
+        Pageable pageable = PageRequest.of(page, 5);
 
-    public List<Hotel> filterByName(String name) { return repository.findHotelsByNameIsLikeIgnoreCaseOrNameContainingIgnoreCase(name, name); }
+        if(!name.equals("")) {
+            return repository.findHotelsByNameContainingIgnoreCase(name, pageable);
+        }
+
+        return repository.findAll(pageable);
+    }
 
     public Hotel save(Hotel hotel) {
         try {

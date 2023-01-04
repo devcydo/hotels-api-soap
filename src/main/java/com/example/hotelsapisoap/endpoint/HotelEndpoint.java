@@ -9,12 +9,13 @@ import com.example.hotelsapisoap.service.HotelService;
 
 import com.hotels.soap.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -24,9 +25,8 @@ public class HotelEndpoint {
 
     private static final String NAMESPACE_URI = "http://hotels.com/soap";
 
-    private HotelService hotelService;
+    private final HotelService hotelService;
 
-    @Autowired
     public HotelEndpoint(HotelService hotelService){
         this.hotelService = hotelService;
     }
@@ -44,17 +44,8 @@ public class HotelEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllHotelDetailsRequest")
     @ResponsePayload
     public GetAllHotelDetailsResponse processAllHotelDetailsRequest(@RequestPayload GetAllHotelDetailsRequest request){
-        List<Hotel> hotels = hotelService.getAll();
-
-        return mapAllHotelDetails(hotels);
-    }
-
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllHotelDetailsByNameRequest")
-    @ResponsePayload
-    public GetAllHotelDetailsByNameResponse processAllHotelDetailsByNameRequest(@RequestPayload GetAllHotelDetailsByNameRequest request){
-        List<Hotel> hotels = hotelService.filterByName(request.getName());
-
-        return mapAllHotelDetailsByName(hotels);
+        Page<Hotel> hotelPage = hotelService.filterByName(Optional.of(request.getPageNumber()).orElse(0), Optional.ofNullable(request.getFilterByName()).orElse(""));
+        return mapAllHotelDetails(hotelPage);
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SaveHotelDetailsRequest")
@@ -97,18 +88,13 @@ public class HotelEndpoint {
         return response;
     }
 
-    private GetAllHotelDetailsResponse mapAllHotelDetails(List<Hotel> hotels) {
+    private GetAllHotelDetailsResponse mapAllHotelDetails(Page<Hotel> hotelPage) {
         GetAllHotelDetailsResponse response = new GetAllHotelDetailsResponse();
 
-        hotels.stream().forEach(hotel -> response.getHotelDetails().add(toHotelDetails(hotel)));
+        List<Hotel> hotels = new ArrayList<>();
 
-        return response;
-    }
-
-    private GetAllHotelDetailsByNameResponse mapAllHotelDetailsByName(List<Hotel> hotels) {
-        GetAllHotelDetailsByNameResponse response = new GetAllHotelDetailsByNameResponse();
-
-        hotels.stream().forEach(hotel -> response.getHotelDetails().add(toHotelDetails(hotel)));
+        hotelPage.forEach(hotels::add);
+        hotels.forEach(hotel -> response.getHotelDetails().add(toHotelDetails(hotel)));
 
         return response;
     }

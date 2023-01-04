@@ -20,27 +20,16 @@
 
     <xs:element name="GetAllHotelDetailsRequest">
         <xs:complexType>
+            <xs:sequence>
+                <xs:element name="pageNumber" type="xs:int" />
+                <xs:element name="filterByName" type="xs:string" />
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="GetAllHotelDetailsResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="HotelDetails" type="tns:HotelDetails" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="GetAllHotelDetailsByNameRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="name" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="GetAllHotelDetailsByNameResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="HotelDetails" type="tns:HotelDetails" maxOccurs="unbounded"/>
+                <xs:element name="HotelDetails" type="tns:HotelDetails" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

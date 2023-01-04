@@ -50,14 +50,10 @@ public class HotelsApiSoapIntegrationTest {
     public void getHotelsNotNull() {
         WebServiceTemplate ws = new WebServiceTemplate(marshaller);
         GetAllHotelDetailsRequest request = new GetAllHotelDetailsRequest();
+
+        request.setPageNumber(0);
+        request.setFilterByName("");
         assertNotNull(ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request));
     }
 
-    @Test
-    public void getHotelsByNameNotNull() {
-        WebServiceTemplate ws = new WebServiceTemplate(marshaller);
-        GetAllHotelDetailsByNameRequest request = new GetAllHotelDetailsByNameRequest();
-        request.setName("Hotel");
-        assertNotNull(ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request));
-    }
 }
