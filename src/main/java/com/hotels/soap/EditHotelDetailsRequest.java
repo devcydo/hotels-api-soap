@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="ServiceStatus" type="{http://hotels.com/soap}ServiceStatus"/>
+ *         &lt;element name="HotelDetails" type="{http://hotels.com/soap}HotelDetails"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "serviceStatus"
+    "hotelDetails"
 })
-@XmlRootElement(name = "DeleteHotelDetailsResponse")
-public class DeleteHotelDetailsResponse {
+@XmlRootElement(name = "EditHotelDetailsRequest")
+public class EditHotelDetailsRequest {
 
-    @XmlElement(name = "ServiceStatus", required = true)
-    protected ServiceStatus serviceStatus;
+    @XmlElement(name = "HotelDetails", required = true)
+    protected HotelDetails hotelDetails;
 
     /**
-     * Gets the value of the serviceStatus property.
+     * Gets the value of the hotelDetails property.
      * 
      * @return
      *     possible object is
-     *     {@link ServiceStatus }
+     *     {@link HotelDetails }
      *     
      */
-    public ServiceStatus getServiceStatus() {
-        return serviceStatus;
+    public HotelDetails getHotelDetails() {
+        return hotelDetails;
     }
 
     /**
-     * Sets the value of the serviceStatus property.
+     * Sets the value of the hotelDetails property.
      * 
      * @param value
      *     allowed object is
-     *     {@link ServiceStatus }
+     *     {@link HotelDetails }
      *     
      */
-    public void setServiceStatus(ServiceStatus value) {
-        this.serviceStatus = value;
+    public void setHotelDetails(HotelDetails value) {
+        this.hotelDetails = value;
     }
 
 }

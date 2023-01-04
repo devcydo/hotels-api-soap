@@ -34,14 +34,29 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="SaveHotelDetailsRequest">
+    <xs:element name="AddHotelDetailsRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="HotelDetails" type="tns:HotelDetails"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="SaveHotelDetailsResponse">
+    <xs:element name="AddHotelDetailsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="HotelDetails" type="tns:HotelDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="EditHotelDetailsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="HotelDetails" type="tns:HotelDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="EditHotelDetailsResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="HotelDetails" type="tns:HotelDetails"/>
@@ -125,14 +140,29 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="SaveAmenityDetailsRequest">
+    <xs:element name="AddAmenityDetailsRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="AmenityDetails" type="tns:AmenityDetails"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="SaveAmenityDetailsResponse">
+    <xs:element name="AddAmenityDetailsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AmenityDetails" type="tns:AmenityDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="EditAmenityDetailsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="AmenityDetails" type="tns:AmenityDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="EditAmenityDetailsResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="AmenityDetails" type="tns:AmenityDetails"/>

@@ -6,9 +6,10 @@ import org.springframework.data.domain.Page;
 public interface HotelService {
 
     Hotel getById(long id);
-    Page<Hotel> filterByName(int page, String name);
-    Hotel save(Hotel hotel);
+    Page<Hotel> getHotels(int page, String name);
+    Hotel addHotel(Hotel hotel);
+    Hotel editHotel(Hotel hotel);
     Hotel addAmenity(long id_hotel, long id_amenity);
     Hotel removeAmenity(long id_hotel, long id_amenity);
-    boolean deleteById(long id);
+    void deleteById(long id);
 }

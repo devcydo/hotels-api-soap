@@ -2,6 +2,8 @@ package com.example.hotelsapisoap.config;
 
 import java.util.Properties;
 
+import com.example.hotelsapisoap.exception.BadRequestException;
+import com.example.hotelsapisoap.exception.NotFoundException;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +19,6 @@ import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
 import com.example.hotelsapisoap.exception.DetailSoapFaultDefinitionExceptionResolver;
-import com.example.hotelsapisoap.exception.ServiceFaultException;
 
 @EnableWs
 @Configuration
@@ -58,7 +59,8 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
         Properties errorMappings = new Properties();
         errorMappings.setProperty(Exception.class.getName(), SoapFaultDefinition.SERVER.toString());
-        errorMappings.setProperty(ServiceFaultException.class.getName(), SoapFaultDefinition.SERVER.toString());
+        errorMappings.setProperty(NotFoundException.class.getName(), SoapFaultDefinition.SERVER.toString());
+        errorMappings.setProperty(BadRequestException.class.getName(), SoapFaultDefinition.SERVER.toString());
         exceptionResolver.setExceptionMappings(errorMappings);
         exceptionResolver.setOrder(1);
         return exceptionResolver;

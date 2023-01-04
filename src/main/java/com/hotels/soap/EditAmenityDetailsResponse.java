@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="ServiceStatus" type="{http://hotels.com/soap}ServiceStatus"/>
+ *         &lt;element name="AmenityDetails" type="{http://hotels.com/soap}AmenityDetails"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "serviceStatus"
+    "amenityDetails"
 })
-@XmlRootElement(name = "DeleteHotelDetailsResponse")
-public class DeleteHotelDetailsResponse {
+@XmlRootElement(name = "EditAmenityDetailsResponse")
+public class EditAmenityDetailsResponse {
 
-    @XmlElement(name = "ServiceStatus", required = true)
-    protected ServiceStatus serviceStatus;
+    @XmlElement(name = "AmenityDetails", required = true)
+    protected AmenityDetails amenityDetails;
 
     /**
-     * Gets the value of the serviceStatus property.
+     * Gets the value of the amenityDetails property.
      * 
      * @return
      *     possible object is
-     *     {@link ServiceStatus }
+     *     {@link AmenityDetails }
      *     
      */
-    public ServiceStatus getServiceStatus() {
-        return serviceStatus;
+    public AmenityDetails getAmenityDetails() {
+        return amenityDetails;
     }
 
     /**
-     * Sets the value of the serviceStatus property.
+     * Sets the value of the amenityDetails property.
      * 
      * @param value
      *     allowed object is
-     *     {@link ServiceStatus }
+     *     {@link AmenityDetails }
      *     
      */
-    public void setServiceStatus(ServiceStatus value) {
-        this.serviceStatus = value;
+    public void setAmenityDetails(AmenityDetails value) {
+        this.amenityDetails = value;
     }
 
 }

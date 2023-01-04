@@ -25,7 +25,7 @@ public class HotelsApiSoapIntegrationTest {
         marshaller.afterPropertiesSet();
 
         WebServiceTemplate ws = new WebServiceTemplate(marshaller);
-        SaveHotelDetailsRequest request = new SaveHotelDetailsRequest();
+        AddHotelDetailsRequest request = new AddHotelDetailsRequest();
 
         HotelDetails hotelDetails = new HotelDetails();
         hotelDetails.setName("Hotel from TEST 1");
@@ -34,7 +34,7 @@ public class HotelsApiSoapIntegrationTest {
         request.setHotelDetails(hotelDetails);
 
         Object response = ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
-        createdHotelId = ((SaveHotelDetailsResponse) response).getHotelDetails().getId();
+        createdHotelId = ((AddHotelDetailsRequest) response).getHotelDetails().getId();
         assertNotNull(response);
     }
 

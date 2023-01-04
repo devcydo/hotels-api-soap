@@ -8,14 +8,6 @@ import java.util.Set;
 
 @Component
 public interface AmenityRepository extends CrudRepository<Amenity, Long> {
-
     Set<Amenity> findAll();
-
     Set<Amenity> findAmenitiesByHotelsId(long id_hotel);
-
-    Amenity findById(long id);
-
-    Amenity save(Amenity amenity);
-
-    void deleteById(long id);
 }

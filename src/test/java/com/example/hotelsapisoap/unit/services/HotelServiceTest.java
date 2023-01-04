@@ -34,7 +34,7 @@ public class HotelServiceTest {
     @Test
     void createHotel() {
         doReturn(testHotel).when(hotelRepository).save(testHotel);
-        Hotel resultHotel = hotelService.save(testHotel);
+        Hotel resultHotel = hotelService.addHotel(testHotel);
         assertEquals(testHotel, resultHotel);
     }
 }

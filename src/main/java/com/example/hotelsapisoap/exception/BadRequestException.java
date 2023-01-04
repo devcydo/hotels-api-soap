@@ -2,19 +2,18 @@ package com.example.hotelsapisoap.exception;
 
 import com.hotels.soap.ServiceStatus;
 
-public class NotFoundException extends RuntimeException {
-
+public class BadRequestException extends RuntimeException {
     private ServiceStatus serviceStatus;
 
-    public NotFoundException(String message) {
-        super(message);
+    public BadRequestException(String message) {
+        super("ERROR");
         this.serviceStatus = new ServiceStatus();
-        serviceStatus.setStatusCode("NOT_FOUND");
+        serviceStatus.setStatusCode("BAD_REQUEST");
         serviceStatus.setMessage(message);
     }
 
     public ServiceStatus getServiceStatus() {
-        return serviceStatus;
+        return this.serviceStatus;
     }
 
     public void setServiceStatus(ServiceStatus serviceStatus) {
