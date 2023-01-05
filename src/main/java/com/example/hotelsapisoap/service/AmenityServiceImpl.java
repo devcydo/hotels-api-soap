@@ -5,6 +5,7 @@ import com.example.hotelsapisoap.exception.NotFoundException;
 import com.example.hotelsapisoap.model.Amenity;
 import com.example.hotelsapisoap.model.Hotel;
 import com.example.hotelsapisoap.repository.AmenityRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,11 +16,8 @@ import static com.example.hotelsapisoap.helper.AmenityHelper.validateAmenity;
 @Service
 public class AmenityServiceImpl implements AmenityService {
 
-    private final AmenityRepository repository;
-
-    public AmenityServiceImpl(AmenityRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private AmenityRepository repository;
 
     @Override
     public Amenity getById(long id){

@@ -6,7 +6,6 @@ import java.util.List;
 @Entity
 @Table(name = "amenity")
 public class Amenity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -20,15 +19,7 @@ public class Amenity {
     @ManyToMany(mappedBy = "amenities", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Hotel> hotels;
 
-    public Amenity() {
-    }
-
-    public Amenity(long id, String name, String description, List<Hotel> hotels) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.hotels = hotels;
-    }
+    public Amenity() {}
 
     public long getId() {
         return id;

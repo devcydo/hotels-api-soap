@@ -1,9 +1,7 @@
 package com.example.hotelsapisoap.integration;
 
 import com.hotels.soap.*;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -28,17 +26,43 @@ public class HotelsApiSoapIntegrationTest {
         marshaller.afterPropertiesSet();
 
         WebServiceTemplate ws = new WebServiceTemplate(marshaller);
-        AddHotelDetailsRequest request = new AddHotelDetailsRequest();
+        AddHotelDetailsRequest addHotelDetailsRequest = new AddHotelDetailsRequest();
 
         HotelDetails hotelDetails = new HotelDetails();
-        hotelDetails.setName("Hotel from TEST 1");
-        hotelDetails.setAddress("Address from Hotel TEST 1");
-        hotelDetails.setRating(1);
-        request.setHotelDetails(hotelDetails);
+        hotelDetails.setName("Hotel from TEST integration");
+        hotelDetails.setAddress("Address from Hotel TEST integration");
+        hotelDetails.setRating(5);
+        addHotelDetailsRequest.setHotelDetails(hotelDetails);
 
-        Object response = ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
-        createdHotelId = ((AddHotelDetailsResponse) response).getHotelDetails().getId();
-        assertNotNull(response);
+        Object hotelResponse = ws.marshalSendAndReceive("http://localhost:" + port + "/ws", addHotelDetailsRequest);
+        createdHotelId = ((AddHotelDetailsResponse) hotelResponse).getHotelDetails().getId();
+        assertNotNull(hotelResponse);
+
+        AddAmenityDetailsRequest addAmenityDetailsRequest = new AddAmenityDetailsRequest();
+
+        AmenityDetails amenityDetails = new AmenityDetails();
+        amenityDetails.setName("Outdoor pool");
+        amenityDetails.setDescription("Open from 8:00 to 20:00");
+        addAmenityDetailsRequest.setAmenityDetails(amenityDetails);
+
+        Object amenityResponse = ws.marshalSendAndReceive("http://localhost:" + port + "/ws", addAmenityDetailsRequest);
+        createdAmenityId = ((AddAmenityDetailsResponse) amenityResponse).getAmenityDetails().getId();
+        assertNotNull(amenityResponse);
+    }
+
+    @AfterEach
+    public void terminate(TestInfo info) {
+
+        if(info.getDisplayName().equals("deleteHotel_success()") || info.getDisplayName().equals("addAmenityToHotel_success()")) return;
+
+        WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+        DeleteAmenityDetailsRequest deleteAmenityDetailsRequest = new DeleteAmenityDetailsRequest();
+        deleteAmenityDetailsRequest.setId(createdAmenityId);
+        ws.marshalSendAndReceive("http://localhost:" + port + "/ws", deleteAmenityDetailsRequest);
+
+        DeleteHotelDetailsRequest deleteHotelDetailsRequest = new DeleteHotelDetailsRequest();
+        deleteHotelDetailsRequest.setId(createdHotelId);
+        ws.marshalSendAndReceive("http://localhost:" + port + "/ws", deleteHotelDetailsRequest);
     }
 
     @Test
@@ -47,7 +71,7 @@ public class HotelsApiSoapIntegrationTest {
            WebServiceTemplate ws = new WebServiceTemplate(marshaller);
            AddHotelDetailsRequest request = new AddHotelDetailsRequest();
            HotelDetails hotelDetails = new HotelDetails();
-           hotelDetails.setName(null);
+           hotelDetails.setName("");
            hotelDetails.setAddress("Address");
            hotelDetails.setRating(1);
            request.setHotelDetails(hotelDetails);
@@ -136,4 +160,83 @@ public class HotelsApiSoapIntegrationTest {
         });
     }
 
+    @Test
+    public void addAmenityToHotel_success() {
+        WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+        AddAmenityDetailsToHotelDetailsRequest request = new AddAmenityDetailsToHotelDetailsRequest();
+        request.setIdHotel(createdHotelId);
+        request.setIdAmenity(createdAmenityId);
+        Object response = ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
+        HotelDetails hotelResponse = ((AddAmenityDetailsToHotelDetailsResponse) response).getHotelDetails();
+        assertEquals(createdHotelId, hotelResponse.getId());
+    }
+
+    @Test
+    public void addAmenityToHotel_notFound() {
+        Assertions.assertThrows(SoapFaultClientException.class, () -> {
+            WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+            AddAmenityDetailsToHotelDetailsRequest request = new AddAmenityDetailsToHotelDetailsRequest();
+            request.setIdHotel(0);
+            request.setIdAmenity(0);
+            ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
+        });
+    }
+
+    @Test
+    public void addAmenity_badRequest(){
+        Assertions.assertThrows(SoapFaultClientException.class, () -> {
+            WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+            AddAmenityDetailsRequest request = new AddAmenityDetailsRequest();
+            AmenityDetails amenityDetails = new AmenityDetails();
+            amenityDetails.setName("WiFi");
+            amenityDetails.setDescription("");
+            request.setAmenityDetails(amenityDetails);
+            ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
+        });
+    }
+
+    @Test
+    public void getAmenities_success() {
+        WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+        GetAllAmenityDetailsRequest request = new GetAllAmenityDetailsRequest();
+        assertNotNull(ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request));
+    }
+
+    @Test
+    public void getAmenitiesByHotelId_success() {
+        WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+        GetAllAmenityDetailsByHotelRequest request = new GetAllAmenityDetailsByHotelRequest();
+        request.setIdHotel(createdHotelId);
+        assertNotNull(ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request));
+    }
+
+    @Test
+    public void editAmenity_success() {
+        WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+        EditAmenityDetailsRequest request = new EditAmenityDetailsRequest();
+        AmenityDetails amenityDetails = new AmenityDetails();
+        amenityDetails.setId(createdAmenityId);
+        amenityDetails.setName("Pool");
+        amenityDetails.setDescription("Very cool pool");
+        request.setAmenityDetails(amenityDetails);
+
+        Object response = ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
+        AmenityDetails amenityResponse = ((EditAmenityDetailsResponse) response).getAmenityDetails();
+        assertEquals(amenityDetails.getId(), amenityResponse.getId());
+        assertEquals(amenityDetails.getName(), amenityResponse.getName());
+        assertEquals(amenityDetails.getDescription(), amenityResponse.getDescription());
+    }
+    @Test
+    public void editAmenity_badRequest(){
+        Assertions.assertThrows(SoapFaultClientException.class, () -> {
+            WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+            EditAmenityDetailsRequest request = new EditAmenityDetailsRequest();
+            AmenityDetails amenityDetails = new AmenityDetails();
+            amenityDetails.setId(createdHotelId);
+            amenityDetails.setName(null);
+            amenityDetails.setDescription(null);
+            request.setAmenityDetails(amenityDetails);
+            ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
+        });
+    }
 }

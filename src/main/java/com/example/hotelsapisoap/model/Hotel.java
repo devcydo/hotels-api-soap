@@ -30,14 +30,6 @@ public class Hotel {
 
     public Hotel() {}
 
-    public Hotel(long id, String name, String address, int rating, Set<Amenity> amenities) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.rating = rating;
-        this.amenities = amenities;
-    }
-
     public long getId() {
         return id;
     }

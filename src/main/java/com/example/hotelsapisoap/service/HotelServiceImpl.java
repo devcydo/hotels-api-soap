@@ -6,6 +6,7 @@ import com.example.hotelsapisoap.model.Amenity;
 import com.example.hotelsapisoap.model.Hotel;
 import com.example.hotelsapisoap.repository.AmenityRepository;
 import com.example.hotelsapisoap.repository.HotelRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,13 +18,10 @@ import static com.example.hotelsapisoap.helper.HotelHelper.validateHotel;
 
 @Service
 public class HotelServiceImpl implements HotelService {
-    private final HotelRepository repository;
-    private final AmenityRepository amenityRepository;
-
-    public HotelServiceImpl(HotelRepository repository, AmenityRepository amenityRepository){
-        this.repository = repository;
-        this.amenityRepository = amenityRepository;
-    }
+    @Autowired
+    private HotelRepository repository;
+    @Autowired
+    private AmenityRepository amenityRepository;
 
     @Override
     public Hotel getById(long id){
