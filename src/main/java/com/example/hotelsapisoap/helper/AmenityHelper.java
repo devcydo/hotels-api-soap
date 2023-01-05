@@ -1,6 +1,8 @@
 package com.example.hotelsapisoap.helper;
 
+import com.example.hotelsapisoap.exception.BadRequestException;
 import com.example.hotelsapisoap.model.Amenity;
+import com.example.hotelsapisoap.model.Hotel;
 import com.hotels.soap.*;
 import org.springframework.beans.BeanUtils;
 
@@ -64,5 +66,14 @@ public class AmenityHelper {
         amenity.setDescription(amenityDetails.getDescription());
 
         return amenity;
+    }
+
+    public static void validateAmenity(Amenity amenity) {
+        if(amenity.getName() == null || amenity.getName().equals(""))
+            throw new BadRequestException("Name cannot be empty");
+
+        if(amenity.getDescription() == null || amenity.getDescription().equals(""))
+            throw new BadRequestException("Description cannot be empty");
+
     }
 }

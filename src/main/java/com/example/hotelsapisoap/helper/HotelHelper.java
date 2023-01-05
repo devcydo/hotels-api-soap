@@ -1,5 +1,6 @@
 package com.example.hotelsapisoap.helper;
 
+import com.example.hotelsapisoap.exception.BadRequestException;
 import com.example.hotelsapisoap.model.Amenity;
 import com.example.hotelsapisoap.model.Hotel;
 import com.hotels.soap.*;
@@ -105,5 +106,16 @@ public class HotelHelper {
         hotel.setAddress(hotelDetails.getAddress());
         hotel.setRating(hotelDetails.getRating());
         return hotel;
+    }
+
+    public static void validateHotel(Hotel hotel) {
+        if(hotel.getName() == null || hotel.getName().equals(""))
+            throw new BadRequestException("Name cannot be empty");
+
+        if(hotel.getAddress() == null || hotel.getAddress().equals(""))
+            throw new BadRequestException("Address cannot be empty");
+
+        if(hotel.getRating() < 1 || hotel.getRating() > 5)
+            throw new BadRequestException("Invalid value for rating. Provide an integer value from 1 to 5;");
     }
 }

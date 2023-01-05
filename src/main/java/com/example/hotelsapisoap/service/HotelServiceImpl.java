@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.example.hotelsapisoap.helper.HotelHelper.validateHotel;
+
 @Service
 public class HotelServiceImpl implements HotelService {
     private final HotelRepository repository;
@@ -45,26 +47,21 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public Hotel addHotel(Hotel hotel) throws BadRequestException {
+    public Hotel addHotel(Hotel hotel) throws BadRequestException, BadRequestException {
         Optional<Hotel> optionalHotel = repository.findById(hotel.getId());
         if(optionalHotel.isPresent())
             throw new BadRequestException("Hotel with id: " + hotel.getId() + " already exists");
-
-        if(hotel.getRating() < 1 || hotel.getRating() > 5)
-            throw new BadRequestException("Invalid value for rating. Provide an integer value from 1 to 5;");
+        validateHotel(hotel);
 
         return repository.save(hotel);
     }
 
     @Override
-    public Hotel editHotel(Hotel hotel) throws NotFoundException {
+    public Hotel editHotel(Hotel hotel) throws NotFoundException, BadRequestException {
         Optional<Hotel> optionalHotel = repository.findById(hotel.getId());
-
         if(!optionalHotel.isPresent())
             throw new NotFoundException("Hotel with id: " + hotel.getId() + " not found");
-
-        if(hotel.getRating() < 1 || hotel.getRating() > 5)
-            throw new BadRequestException("Invalid value for rating. Provide an integer value from 1 to 5;");
+        validateHotel(hotel);
 
         Hotel hotelToSave = optionalHotel.get();
         hotelToSave.setName(hotel.getName());

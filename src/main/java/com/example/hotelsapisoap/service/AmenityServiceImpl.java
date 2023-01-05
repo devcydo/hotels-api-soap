@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.example.hotelsapisoap.helper.AmenityHelper.validateAmenity;
+
 @Service
 public class AmenityServiceImpl implements AmenityService {
 
@@ -41,19 +43,21 @@ public class AmenityServiceImpl implements AmenityService {
     }
 
     @Override
-    public Amenity addAmenity(Amenity amenity) {
+    public Amenity addAmenity(Amenity amenity) throws NotFoundException, BadRequestException {
         Optional<Amenity> optionalAmenity = repository.findById(amenity.getId());
         if(optionalAmenity.isPresent())
             throw new BadRequestException("Amenity with id: " + amenity.getId() + " already exists");
+        validateAmenity(amenity);
+
         return repository.save(amenity);
     }
 
     @Override
-    public Amenity editAmenity(Amenity amenity) throws NotFoundException {
+    public Amenity editAmenity(Amenity amenity) throws NotFoundException, BadRequestException {
         Optional<Amenity> optionalAmenity = repository.findById(amenity.getId());
-
         if(!optionalAmenity.isPresent())
             throw new NotFoundException("Amenity with id: " + amenity.getId() + " not found");
+        validateAmenity(amenity);
 
         Amenity amenityToSave = optionalAmenity.get();
         amenityToSave.setName(amenity.getName());
