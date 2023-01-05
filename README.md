@@ -19,3 +19,10 @@ Contains microservice for Hotels demo
 * Docker
 
 ### Getting started
+
+To run the project use:
+```
+mvn spring-boot:run
+```
+
+Contract is exposed per default at http://localhost:8081
