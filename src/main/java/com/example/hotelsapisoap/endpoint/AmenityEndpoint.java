@@ -9,6 +9,7 @@ import static com.example.hotelsapisoap.helper.AmenityHelper.*;
 
 import com.hotels.soap.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -20,9 +21,8 @@ import java.util.Set;
 public class AmenityEndpoint {
     private static final String NAMESPACE_URI = "http://hotels.com/soap";
 
-    private final AmenityService amenityService;
-
-    public AmenityEndpoint(AmenityService amenityService) { this.amenityService = amenityService; }
+    @Autowired
+    private AmenityService amenityService;
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllAmenityDetailsRequest")
     @ResponsePayload
